@@ -1,0 +1,110 @@
+digraph "void export(java.lang.String)"{
+    label="void export(java.lang.String)";
+    node [shape=box];
+
+    "0" [style=filled,fillcolor=gray,label="Block #0\nEntry\njava.lang.Throwable $r21, $r22;\ljava.sql.Connection $r4;\ljava.sql.SQLException $r19;\ljava.sql.ResultSet $r8;\lint $i0, i1;\ljava.lang.String r1, $r2, $r3, $r5, $r6, $r15, $r16, r23, r24;\lboolean $z0, $z1;\ljava.io.PrintStream $r18, $r20;\ljava.io.BufferedWriter $r9, $r11, $r12, $r13;\ljava.io.FileWriter $r10;\ljava.io.IOException $r17;\ljava.sql.Statement $r7;\ljava.lang.Object $r14;\ldb2csv.DB2CsvExporter r0;\lr0 := @this: db2csv.DB2CsvExporter;\lr1 := @parameter0: java.lang.String;\l$r2 = virtualinvoke r1.<java.lang.String: java.lang.String concat(java.lang.String)>(\"_Export\");\l$r3 = virtualinvoke r0.<db2csv.DB2CsvExporter: java.lang.String getFileName(java.lang.String)>($r2);\l",];
+    
+    "0"->"1";
+    "1"->"2";
+    "2"->"3";
+    "3"->"4";
+    "3"->"14";
+    
+    "1" [label="Block #1\nlabel1:\n$r4 = staticinvoke <java.sql.DriverManager: java.sql.Connection getConnection(java.lang.String,java.lang.String,java.lang.String)>(\"jdbc:mysql://localhost:3306/tus\", \"mabel\", \"fff301155\");\l",];
+
+    "2" [label="Block #2\nlabel2:\n$r5 = \"SELECT * FROM \";\l$r6 = virtualinvoke $r5.<java.lang.String: java.lang.String concat(java.lang.String)>(r1);\l$r7 = interfaceinvoke $r4.<java.sql.Connection: java.sql.Statement createStatement()>();\l$r8 = interfaceinvoke $r7.<java.sql.Statement: java.sql.ResultSet executeQuery(java.lang.String)>($r6);\l$r9 = new java.io.BufferedWriter;\l$r10 = new java.io.FileWriter;\lspecialinvoke $r10.<java.io.FileWriter: void <init>(java.lang.String)>($r3);\lspecialinvoke $r9.<java.io.BufferedWriter: void <init>(java.io.Writer)>($r10);\lr0.<db2csv.DB2CsvExporter: java.io.BufferedWriter fileWriter> = $r9;$i0 = virtualinvoke r0.<db2csv.DB2CsvExporter: int writeHeaderLine(java.sql.ResultSet)>($r8);\l",];
+
+    "3" [label="Block #3\nlabel3:\n$z0 = interfaceinvoke $r8.<java.sql.ResultSet: boolean next()>();\lif $z0 == 0 goto label09;\l",];
+
+    "4" [label="Block #4\nr23 = \"\";\li1 = 2;\l",];
+
+    "4"->"5";
+    "5"->"6";
+    "5"->"13";
+
+    "6"->"7";
+    "6"->"8";
+    
+    "5" [label="Block #5\nlabel4:\nif i1 > $i0 goto label08;\l",];
+    
+    "6" [label="Block #6\n$r14 = interfaceinvoke $r8.<java.sql.ResultSet: java.lang.Object getObject(int)>(i1);\lr24 = \"\";\lif $r14 == null goto label05;\l",];
+    
+    "7" [label="Block #7\nr24 = virtualinvoke $r14.<java.lang.Object: java.lang.String toString()>();\l",];
+
+    "7"->"8";
+    "8"->"9";
+    "8"->"10";
+
+
+    "8" [label="Block #8\nlabel5:\n$z1 = $r14 instanceof java.lang.String;\lif $z1 == 0 goto label06;\l",];
+    
+    "9" [label="Block #9\n$r16 = virtualinvoke r0.<db2csv.DB2CsvExporter: java.lang.String escapeDoubleQuotes(java.lang.String)>(r24);\lr24 = dynamicinvoke \"makeConcatWithConstants\" <java.lang.String (java.lang.String)>($r16) <java.lang.invoke.StringConcatFactory: java.lang.invoke.CallSite makeConcatWithConstants(java.lang.invoke.MethodHandles$Lookup,java.lang.String,java.lang.invoke.MethodType,java.lang.String,java.lang.Object[])>(\"\\\"\\u0001\\\"\");\l",];
+    
+    "9"->"10";
+
+    "10" [label="Block #10\nlabel6:\n$r15 = virtualinvoke r23.<java.lang.String: java.lang.String concat(java.lang.String)>(r24);\lr23 = $r15;\lif i1 == $i0 goto label07;\l",];
+    
+    "10"->"11";
+    "10"->"12";
+
+    "11" [label="Block #11\nr23 = virtualinvoke $r15.<java.lang.String: java.lang.String concat(java.lang.String)>(\",\");\l",];
+
+    "11"->"12";
+    
+    "12" [label="Block #12\nlabel7:\ni1 = i1 + 1;\lgoto label04;\l",];
+
+    "12"->"5";
+    
+    "13" [label="Block #13\nlabel8:\n$r12 = r0.<db2csv.DB2CsvExporter: java.io.BufferedWriter fileWriter>;\lvirtualinvoke $r12.<java.io.BufferedWriter: void newLine()>();\l$r13 = r0.<db2csv.DB2CsvExporter: java.io.BufferedWriter fileWriter>;\lvirtualinvoke $r13.<java.io.BufferedWriter: void write(java.lang.String)>(r23);\lgoto label03;\l",];
+
+    "13"->"3";
+    
+    "14" [label="Block #14\nlabel9:\ninterfaceinvoke $r7.<java.sql.Statement: void close()>();\l$r11 = r0.<db2csv.DB2CsvExporter: java.io.BufferedWriter fileWriter>;\lvirtualinvoke $r11.<java.io.BufferedWriter: void close()>();\l",];
+
+    "14"->"15";
+    
+    "15" [label="Block #15\nlabel10:\nif $r4 == null goto label16;\l",];
+
+    "15"->"16";
+    "15"->"22";
+    
+    "16" [label="Block #16\ninterfaceinvoke $r4.<java.sql.Connection: void close()>();\lgoto label16;\l",];
+
+    "16"->"22";
+    
+    "17" [label="Block #17\nlabel11:\n$r22 := @caughtexception;\lif $r4 == null goto label15;\l",];
+
+    "17"->"18";
+    "17"->"21";
+    
+    "18" [label="Block #18\nlabel12:\ninterfaceinvoke $r4.<java.sql.Connection: void close()>();\l",];
+
+    "18"->"19";
+    
+    "19" [label="Block #19\nlabel13:\ngoto label15;\l",];
+
+    "19"->"21";
+    
+    "20" [label="Block #20\nlabel14:\n$r21 := @caughtexception;\lvirtualinvoke $r22.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r21);\l",];
+
+    "20"->"21";
+    
+    "21" [label="Block #21\nlabel15:\nthrow $r22;\l",];
+
+    "21"->"22";
+    
+    "22" [label="Block #22\nlabel16:\ngoto label19;\l",];
+
+    "22"->"25";
+    
+    "23" [label="Block #23\nlabel:17\n$r19 := @caughtexception;\l$r20 = <java.lang.System: java.io.PrintStream out>;\lvirtualinvoke $r20.<java.io.PrintStream: void println(java.lang.String)>(\"Database error:\");\lvirtualinvoke $r19.<java.sql.SQLException: void printStackTrace()>();\lgoto label19;\l",];
+
+    "23"->"25";
+    
+    "24" [label="Block #24\nlabel18:\n$r17 := @caughtexception;\l$r18 = <java.lang.System: java.io.PrintStream out>;\lvirtualinvoke $r18.<java.io.PrintStream: void println(java.lang.String)>(\"File IO error:\");\lvirtualinvoke $r17.<java.io.IOException: void printStackTrace()>();\l",];
+
+    "24"->"25";
+    
+    "25" [style=filled,fillcolor=gray,label="Block #25\nlabel19:\nreturn;\lcatch java.lang.Throwable from label02 to label10 with label11;\lcatch java.lang.Throwable from label12 to label13 with label14;\lcatch java.sql.SQLException from label01 to label16 with label17;\lcatch java.io.IOException from label01 to label16 with label18;\l",];
+    
+}

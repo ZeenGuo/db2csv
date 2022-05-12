@@ -1,0 +1,278 @@
+public class db2csv.DB2CsvExporter extends java.lang.Object
+{
+    public java.io.BufferedWriter fileWriter;
+
+    public void <init>()
+    {
+        db2csv.DB2CsvExporter r0;
+
+        r0 := @this: db2csv.DB2CsvExporter;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public java.lang.String getFileName(java.lang.String)
+    {
+        java.lang.Object[] $r4;
+        java.util.Date $r1;
+        java.text.SimpleDateFormat $r0;
+        java.lang.String $r2, r3, $r5, $r6;
+        db2csv.DB2CsvExporter r7;
+
+        r7 := @this: db2csv.DB2CsvExporter;
+
+        r3 := @parameter0: java.lang.String;
+
+        $r0 = new java.text.SimpleDateFormat;
+
+        specialinvoke $r0.<java.text.SimpleDateFormat: void <init>(java.lang.String)>("yyyy-MM-dd_HH-mm-ss");
+
+        $r1 = new java.util.Date;
+
+        specialinvoke $r1.<java.util.Date: void <init>()>();
+
+        $r2 = virtualinvoke $r0.<java.text.DateFormat: java.lang.String format(java.util.Date)>($r1);
+
+        $r4 = newarray (java.lang.Object)[1];
+
+        $r4[0] = $r2;
+
+        $r5 = staticinvoke <java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])>("_%s.csv", $r4);
+
+        $r6 = virtualinvoke r3.<java.lang.String: java.lang.String concat(java.lang.String)>($r5);
+
+        return $r6;
+    }
+
+    public int writeHeaderLine(java.sql.ResultSet) throws java.sql.SQLException, java.io.IOException
+    {
+        java.io.BufferedWriter $r3;
+        java.sql.ResultSet r0;
+        int $i0, $i1, $i2, i3;
+        java.lang.String $r4, $r5, $r6, r7;
+        db2csv.DB2CsvExporter r2;
+        java.sql.ResultSetMetaData $r1;
+
+        r2 := @this: db2csv.DB2CsvExporter;
+
+        r0 := @parameter0: java.sql.ResultSet;
+
+        $r1 = interfaceinvoke r0.<java.sql.ResultSet: java.sql.ResultSetMetaData getMetaData()>();
+
+        $i0 = interfaceinvoke $r1.<java.sql.ResultSetMetaData: int getColumnCount()>();
+
+        r7 = "";
+
+        i3 = 2;
+
+     label1:
+        if i3 > $i0 goto label2;
+
+        $r5 = interfaceinvoke $r1.<java.sql.ResultSetMetaData: java.lang.String getColumnName(int)>(i3);
+
+        $r6 = virtualinvoke r7.<java.lang.String: java.lang.String concat(java.lang.String)>($r5);
+
+        r7 = virtualinvoke $r6.<java.lang.String: java.lang.String concat(java.lang.String)>(",");
+
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label2:
+        $r3 = r2.<db2csv.DB2CsvExporter: java.io.BufferedWriter fileWriter>;
+
+        $i1 = virtualinvoke r7.<java.lang.String: int length()>();
+
+        $i2 = $i1 - 1;
+
+        $r4 = virtualinvoke r7.<java.lang.String: java.lang.String substring(int,int)>(0, $i2);
+
+        virtualinvoke $r3.<java.io.BufferedWriter: void write(java.lang.String)>($r4);
+
+        return $i0;
+    }
+
+    public java.lang.String escapeDoubleQuotes(java.lang.String)
+    {
+        java.lang.String r0, $r1;
+        db2csv.DB2CsvExporter r2;
+
+        r2 := @this: db2csv.DB2CsvExporter;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = virtualinvoke r0.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("\"", "\"\"");
+
+        return $r1;
+    }
+
+    public void export(java.lang.String)
+    {
+        java.lang.Throwable $r21, $r22;
+        java.sql.Connection $r4;
+        java.sql.SQLException $r19;
+        java.sql.ResultSet $r8;
+        int $i0, i1;
+        java.lang.String r1, $r2, $r3, $r5, $r6, $r15, $r16, r23, r24;
+        boolean $z0, $z1;
+        java.io.PrintStream $r18, $r20;
+        java.io.BufferedWriter $r9, $r11, $r12, $r13;
+        java.io.FileWriter $r10;
+        java.io.IOException $r17;
+        java.sql.Statement $r7;
+        java.lang.Object $r14;
+        db2csv.DB2CsvExporter r0;
+
+        r0 := @this: db2csv.DB2CsvExporter;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = virtualinvoke r1.<java.lang.String: java.lang.String concat(java.lang.String)>("_Export");
+
+        $r3 = virtualinvoke r0.<db2csv.DB2CsvExporter: java.lang.String getFileName(java.lang.String)>($r2);
+
+     label01:
+        $r4 = staticinvoke <java.sql.DriverManager: java.sql.Connection getConnection(java.lang.String,java.lang.String,java.lang.String)>("jdbc:mysql://localhost:3306/tus", "mabel", "fff301155");
+
+     label02:
+        $r5 = "SELECT * FROM ";
+
+        $r6 = virtualinvoke $r5.<java.lang.String: java.lang.String concat(java.lang.String)>(r1);
+
+        $r7 = interfaceinvoke $r4.<java.sql.Connection: java.sql.Statement createStatement()>();
+
+        $r8 = interfaceinvoke $r7.<java.sql.Statement: java.sql.ResultSet executeQuery(java.lang.String)>($r6);
+
+        $r9 = new java.io.BufferedWriter;
+
+        $r10 = new java.io.FileWriter;
+
+        specialinvoke $r10.<java.io.FileWriter: void <init>(java.lang.String)>($r3);
+
+        specialinvoke $r9.<java.io.BufferedWriter: void <init>(java.io.Writer)>($r10);
+
+        r0.<db2csv.DB2CsvExporter: java.io.BufferedWriter fileWriter> = $r9;
+
+        $i0 = virtualinvoke r0.<db2csv.DB2CsvExporter: int writeHeaderLine(java.sql.ResultSet)>($r8);
+
+     label03:
+        $z0 = interfaceinvoke $r8.<java.sql.ResultSet: boolean next()>();
+
+        if $z0 == 0 goto label09;
+
+        r23 = "";
+
+        i1 = 2;
+
+     label04:
+        if i1 > $i0 goto label08;
+
+        $r14 = interfaceinvoke $r8.<java.sql.ResultSet: java.lang.Object getObject(int)>(i1);
+
+        r24 = "";
+
+        if $r14 == null goto label05;
+
+        r24 = virtualinvoke $r14.<java.lang.Object: java.lang.String toString()>();
+
+     label05:
+        $z1 = $r14 instanceof java.lang.String;
+
+        if $z1 == 0 goto label06;
+
+        $r16 = virtualinvoke r0.<db2csv.DB2CsvExporter: java.lang.String escapeDoubleQuotes(java.lang.String)>(r24);
+
+        r24 = dynamicinvoke "makeConcatWithConstants" <java.lang.String (java.lang.String)>($r16) <java.lang.invoke.StringConcatFactory: java.lang.invoke.CallSite makeConcatWithConstants(java.lang.invoke.MethodHandles$Lookup,java.lang.String,java.lang.invoke.MethodType,java.lang.String,java.lang.Object[])>("\"\u0001\"");
+
+     label06:
+        $r15 = virtualinvoke r23.<java.lang.String: java.lang.String concat(java.lang.String)>(r24);
+
+        r23 = $r15;
+
+        if i1 == $i0 goto label07;
+
+        r23 = virtualinvoke $r15.<java.lang.String: java.lang.String concat(java.lang.String)>(",");
+
+     label07:
+        i1 = i1 + 1;
+
+        goto label04;
+
+     label08:
+        $r12 = r0.<db2csv.DB2CsvExporter: java.io.BufferedWriter fileWriter>;
+
+        virtualinvoke $r12.<java.io.BufferedWriter: void newLine()>();
+
+        $r13 = r0.<db2csv.DB2CsvExporter: java.io.BufferedWriter fileWriter>;
+
+        virtualinvoke $r13.<java.io.BufferedWriter: void write(java.lang.String)>(r23);
+
+        goto label03;
+
+     label09:
+        interfaceinvoke $r7.<java.sql.Statement: void close()>();
+
+        $r11 = r0.<db2csv.DB2CsvExporter: java.io.BufferedWriter fileWriter>;
+
+        virtualinvoke $r11.<java.io.BufferedWriter: void close()>();
+
+     label10:
+        if $r4 == null goto label16;
+
+        interfaceinvoke $r4.<java.sql.Connection: void close()>();
+
+        goto label16;
+
+     label11:
+        $r22 := @caughtexception;
+
+        if $r4 == null goto label15;
+
+     label12:
+        interfaceinvoke $r4.<java.sql.Connection: void close()>();
+
+     label13:
+        goto label15;
+
+     label14:
+        $r21 := @caughtexception;
+
+        virtualinvoke $r22.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r21);
+
+     label15:
+        throw $r22;
+
+     label16:
+        goto label19;
+
+     label17:
+        $r19 := @caughtexception;
+
+        $r20 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r20.<java.io.PrintStream: void println(java.lang.String)>("Database error:");
+
+        virtualinvoke $r19.<java.sql.SQLException: void printStackTrace()>();
+
+        goto label19;
+
+     label18:
+        $r17 := @caughtexception;
+
+        $r18 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r18.<java.io.PrintStream: void println(java.lang.String)>("File IO error:");
+
+        virtualinvoke $r17.<java.io.IOException: void printStackTrace()>();
+
+     label19:
+        return;
+
+        catch java.lang.Throwable from label02 to label10 with label11;
+        catch java.lang.Throwable from label12 to label13 with label14;
+        catch java.sql.SQLException from label01 to label16 with label17;
+        catch java.io.IOException from label01 to label16 with label18;
+    }
+}

@@ -1,0 +1,46 @@
+public class db2csv.Main extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        db2csv.Main r0;
+
+        r0 := @this: db2csv.Main;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        int i0, i1;
+        java.lang.String[] r1;
+        java.lang.String r2;
+        db2csv.DB2CsvExporter $r0;
+
+        r1 := @parameter0: java.lang.String[];
+
+        $r0 = new db2csv.DB2CsvExporter;
+
+        specialinvoke $r0.<db2csv.DB2CsvExporter: void <init>()>();
+
+        i0 = lengthof r1;
+
+        i1 = 0;
+
+     label1:
+        if i1 >= i0 goto label2;
+
+        r2 = r1[i1];
+
+        virtualinvoke $r0.<db2csv.DB2CsvExporter: void export(java.lang.String)>(r2);
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+}

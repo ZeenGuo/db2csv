@@ -1,0 +1,12 @@
+digraph "int writeHeaderLine(java.sql.ResultSet)" {
+    label="int writeHeaderLine(java.sql.ResultSet)";
+    node [shape=box];
+    "0" [style=filled,fillcolor=gray,label="Block #0\nr2 := @this\lr0 := @parameter0\l$r1 = interfaceinvoke r0.getMetaData()\l$i0 = interfaceinvoke $r1.getColumnCount()\lr7 = \"\"\li3 = 2\l",];
+    "1" [label="Block #1\nlabel1:\nif i3 > $i0 goto label2\l",];
+    "0"->"1";
+    "2" [label="Block #2\n$r5 = interfaceinvoke $r1.getColumnName(i3)\l$r6 = virtualinvoke r7.concat($r5)\lr7 = virtualinvoke $r6.concat(\",\")\li3 = i3 + 1\lgoto label1\l",];
+    "1"->"2";
+    "3" [style=filled,fillcolor=lightgray,label="Block #3\nlabel2:\n$r3 = r2.fileWriter\l$i1 = virtualinvoke r7.length()\l$i2 = $i1 - 1\l$r4 = virtualinvoke r7.substring(0, $i2)\lvirtualinvoke $r3.write($r4)\lreturn $i0\l",];
+    "1"->"3";
+    "2"->"1";
+}

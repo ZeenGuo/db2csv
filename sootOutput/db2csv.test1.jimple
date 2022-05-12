@@ -1,0 +1,26 @@
+class db2csv.test1 extends java.lang.Object
+{
+
+    void <init>()
+    {
+        db2csv.test1 r0;
+
+        r0 := @this: db2csv.test1;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    int go(int)
+    {
+        int i0;
+        db2csv.test1 r0;
+
+        r0 := @this: db2csv.test1;
+
+        i0 := @parameter0: int;
+
+        return i0;
+    }
+}
